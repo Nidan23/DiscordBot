@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClashOfClans" Version="8.0.0" />
+    <PackageReference Include="Discord.Net" Version="2.2.0" />
+    <PackageReference Include="MySql.Data" Version="8.0.22" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CocNET">
+      <HintPath>..\CocNET-master\CocNET\CocNET\bin\Debug\CocNET.dll</HintPath>
+    </Reference>
+    <Reference Include="Funq">
+      <HintPath>..\CocNET-master\CocNET\CocNET\bin\Debug\Funq.dll</HintPath>
+    </Reference>
+    <Reference Include="MoreLinq">
+      <HintPath>..\CocNET-master\CocNET\CocNET\bin\Debug\MoreLinq.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\CocNET-master\CocNET\CocNET\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\CocNET-master\CocNET\CocNET\bin\Debug\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\CocNET-master\CocNET\CocNET\bin\Debug\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\CocNET-master\CocNET\CocNET\bin\Debug\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
