@@ -18,7 +18,7 @@ namespace DiscordBot
                 default:
                     return "Member";
             }
-        }
+        } // just checking ur rang pattern
 
         public Embed ShittiDev(string nick, string tag, string ranga, string op, string pp, string czob)
         {
@@ -66,7 +66,7 @@ namespace DiscordBot
                 });
 
                 return nie.Build();
-        }
+        } // Basic pattern
         public Embed AllDataShittiDev(string nick, string tag, string ranga, string poziom, string rdonated,
             string received, string awin, string dwin, string uelixir, string ugold, string udark, string warstars,
             string rcwl, string rcg, string th, string op, string pp, string czob)
@@ -187,7 +187,7 @@ namespace DiscordBot
             });
 
             return nie.Build();
-        }
+        }  // Msg pattern 4 data from DB (db includes data from API)
 
         public Embed AllPlayerShittiDev(string nick, string tag, string poziom, string donated,
             string received, string awin, string dwin, string warstars, string cwl, string cg, string th,
@@ -297,7 +297,7 @@ namespace DiscordBot
             });
 
             return nie.Build();
-        }
+        } // Msg pattern 4 data directly from API
         public Embed HomeTroops(string nick, string tag, string poziom, string th, PlayerItemLevelList data, string el)
         {
             var nie = new EmbedBuilder()
@@ -457,7 +457,7 @@ namespace DiscordBot
             }
 
             return nie.Build();
-        }
+        } // Player troops msg pattern
 
         public Embed Spells(string nick, string tag, string poziom, string th, PlayerItemLevelList spells, string el)
         {
@@ -570,7 +570,7 @@ namespace DiscordBot
             }
 
             return nie.Build();
-        }
+        } // Player spells msg pattern
 
         public Embed HomeHeroes(string nick, string tag, string poziom, string th, PlayerItemLevelList hero)
         {
@@ -618,7 +618,7 @@ namespace DiscordBot
             }
 
             return nie.Build();
-        }
+        } // Player heroes msg pattern
         public Embed Machines(string nick, string tag, string poziom, string th, PlayerItemLevelList machine)
         {
             var nie = new EmbedBuilder()
@@ -697,7 +697,7 @@ namespace DiscordBot
             }
 
             return nie.Build();
-        }
+        } // Player machines msg pattern
 
     }
 }

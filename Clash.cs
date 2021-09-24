@@ -7,35 +7,28 @@ namespace DiscordBot
 {
     public class Clash
     {
-        private readonly EmbedMess _embedmess = new EmbedMess();
-        private ClashOfClansClient ClashClient { get; set; }
-        public Clan ClashClan { get; set; }
-        public Player ClashPlayer { get; set; }
-        private void CocApiConn()
+        private readonly EmbedMess _embedmess = new EmbedMess(); // class object
+        private ClashOfClansClient ClashClient { get; set; } // get set, wow :D
+        public Clan ClashClan { get; set; } // get set, wow :D
+        public Player ClashPlayer { get; set; } // get set, wow :D
+        public Clash coc = new Clash(); // class obj
+        private void CocApiConn() // Clash Of Clans API conn
         {
             string token =
-                "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03Z" +
-                "mExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2" +
-                "FtZWFwaSIsImp0aSI6IjI4NzNkZWRkLTdhODAtNDFkOC04ZGJmLTZmMzk0NTI4ODE4NCIsImlhd" +
-                "CI6MTYwNjk4NjA5MSwic3ViIjoiZGV2ZWxvcGVyLzgyN2U0YTdiLTgzZDQtNjdlYi01ZTI3LWU4ND" +
-                "Q3ZDMxZmE3NiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc" +
-                "2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjM1LjIzNC4xMzQuMTg3Il0sInR5cGU" +
-                "iOiJjbGllbnQifV19.TtmgqqxQtMTwjWozSAy41qXmXm5N3P43z3YjPPm2nyZDWD-8V9JhA4p5H4s1p8Pghs9a8sonPPiVVufbOZJndA";
+                "****"; // API token
 
-            ClashClient = new ClashOfClansClient(token);
+            ClashClient = new ClashOfClansClient(token); 
         }
-        public async Task<Task> CocApiClan(string clanTag)
+        public async Task<Task> CocApiClan(string clanTag) // setting clan
         {
-            var coc = new Clash();
             coc.CocApiConn();
             ClashClan = await coc.ClashClient.Clans.GetClanAsync(clanTag);
 
             return Task.CompletedTask;
         }
 
-        public async Task<Task> CocApiPlayer(string playerTag)
+        public async Task<Task> CocApiPlayer(string playerTag) // setting player
         {
-            var coc = new Clash();
             coc.CocApiConn();
             ClashPlayer = await coc.ClashClient.Players.GetPlayerAsync(playerTag);
 
@@ -45,8 +38,8 @@ namespace DiscordBot
         public async Task PlayerInfo(SocketMessage message, string tag)
         {
             await CocApiPlayer(tag);
-            if (ClashPlayer.Clan != null)
-                if (ClashPlayer.Clan.BadgeUrls.Large is { })
+            if (ClashPlayer.Clan != null) // if player is in clan or not
+                if (ClashPlayer.Clan.BadgeUrls.Large is { }) // second checking if first was not successfull
                     await message.Channel.SendMessageAsync("", false, _embedmess.AllPlayerShittiDev(ClashPlayer.Name,
                         ClashPlayer.Tag, ClashPlayer.ExpLevel.ToString(),
                         ClashPlayer.Donations.ToString(), ClashPlayer.DonationsReceived.ToString(),
@@ -55,7 +48,8 @@ namespace DiscordBot
                         ClashPlayer.Achievements[31].Value.ToString(),
                         ClashPlayer.TownHallLevel.ToString(), ClashPlayer.Clan.ClanLevel.ToString(),
                         ClashPlayer.Clan.BadgeUrls.Large.ToString(), ClashPlayer.Clan.Tag, ClashPlayer.Clan.Name,
-                        ClashPlayer.Role.ToString()));
+                        ClashPlayer.Role.ToString())); // Send msg when player is in clan
+                // AllPlayerShittiDev() - sending embed msg func, but it looks shitty, so ShittiDev 
 
                 else
                     await message.Channel.SendMessageAsync("", false, _embedmess.AllPlayerShittiDev(ClashPlayer.Name,
@@ -64,7 +58,7 @@ namespace DiscordBot
                         ClashPlayer.AttackWins.ToString(), ClashPlayer.DefenseWins.ToString(),
                         ClashPlayer.WarStars.ToString(), ClashPlayer.Achievements[33].Value.ToString(),
                         ClashPlayer.Achievements[31].Value.ToString(),
-                        ClashPlayer.TownHallLevel.ToString()));
+                        ClashPlayer.TownHallLevel.ToString()));// Send msg when player is not in clan
 
 
             else
@@ -74,9 +68,9 @@ namespace DiscordBot
                         ClashPlayer.AttackWins.ToString(), ClashPlayer.DefenseWins.ToString(),
                         ClashPlayer.WarStars.ToString(), ClashPlayer.Achievements[33].Value.ToString(),
                         ClashPlayer.Achievements[31].Value.ToString(),
-                        ClashPlayer.TownHallLevel.ToString()));
+                        ClashPlayer.TownHallLevel.ToString()));// Send msg when player is not in clan
         }
-        public async Task Playerdata(SocketMessage message, string tag)
+        public async Task Playerdata(SocketMessage message, string tag) // getting player basic data + troops
         {
             await CocApiPlayer(tag);
             await message.Channel.SendMessageAsync("", false,
@@ -86,7 +80,7 @@ namespace DiscordBot
                 _embedmess.HomeTroops(ClashPlayer.Name, ClashPlayer.Tag, ClashPlayer.ExpLevel.ToString(),
                     ClashPlayer.TownHallLevel.ToString(),ClashPlayer.Troops, "de"));
         }
-        public async Task PlayerSpells(SocketMessage message, string tag)
+        public async Task PlayerSpells(SocketMessage message, string tag) // getting player army - spells
         {
             await CocApiPlayer(tag);
             await message.Channel.SendMessageAsync("", false,
@@ -96,19 +90,21 @@ namespace DiscordBot
                 _embedmess.Spells(ClashPlayer.Name, ClashPlayer.Tag, ClashPlayer.ExpLevel.ToString(),
                     ClashPlayer.TownHallLevel.ToString(), ClashPlayer.Spells, "de"));
         }
-        public async Task PlayerHeroes(SocketMessage message, string tag)
+        public async Task PlayerHeroes(SocketMessage message, string tag) // getting player army - heroes
         {
             await CocApiPlayer(tag);
             await message.Channel.SendMessageAsync("", false,
                 _embedmess.HomeHeroes(ClashPlayer.Name, ClashPlayer.Tag, ClashPlayer.ExpLevel.ToString(),
                     ClashPlayer.TownHallLevel.ToString(), ClashPlayer.Heroes));
         }
-        public async Task PlayerMachines(SocketMessage message, string tag)
+        public async Task PlayerMachines(SocketMessage message, string tag) // getting player army - machines
         {
             await CocApiPlayer(tag);
             await message.Channel.SendMessageAsync("", false,
                 _embedmess.Machines(ClashPlayer.Name, ClashPlayer.Tag, ClashPlayer.ExpLevel.ToString(),
                     ClashPlayer.TownHallLevel.ToString(), ClashPlayer.Troops));
         }
+
+        // troops are only from home village, builder base troops comming soon
     }
 }

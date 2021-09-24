@@ -7,45 +7,45 @@ namespace DiscordBot
 {
     class Commands
     {
-        private readonly Clash _clash = new Clash();
-        private readonly DiscordSocketClient _client = new DiscordSocketClient();
-        private readonly Database _db = new Database();
+        private readonly Clash _clash = new Clash(); // class object
+        private readonly DiscordSocketClient _client = new DiscordSocketClient(); // same  
+        private readonly Database _db = new Database(); // same
 
-        public Task Log(LogMessage msg)
+        public Task Log(LogMessage msg) // logging
         {
-            Console.WriteLine(msg.ToString());
+            Console.WriteLine(msg.ToString()); // write log on console
             return Task.CompletedTask;
         }
 
-        public async Task JoinMess(SocketGuildUser user)
+        public async Task JoinMess(SocketGuildUser user) // not working
         {
-            var channel = _client.GetChannel(597408924815327267) as SocketTextChannel;
-            await channel.SendMessageAsync($"Witamy na discordzie Klanu Nowa Era!");
+            var channel = _client.GetChannel(597408924815327267) as SocketTextChannel; // get channel id
+            await channel.SendMessageAsync($"Witamy na discordzie Klanu Nowa Era!"); // send welcome msg
         }
-        public async Task LeaveMess(SocketGuildUser user)
+        public async Task LeaveMess(SocketGuildUser user) // not working
         {
-            var channel = _client.GetChannel(597408924815327267) as SocketTextChannel;
-            await channel.SendMessageAsync($"Użytkownik {user.Username} opuścił naszą drużynę!");
+            var channel = _client.GetChannel(597408924815327267) as SocketTextChannel; // get channel id
+            await channel.SendMessageAsync($"Użytkownik {user.Username} opuścił naszą drużynę!"); // send gb msg
         }
-        public async Task<Task> MessageHandeler(SocketMessage message)
+        public async Task<Task> MessageHandeler(SocketMessage message) // command handeler actually
         {
-            string command;
-            string[] args;
-            int lengthOfCommand;
-            message.Content.ToLower();
-            _client.Log += Log;
-            if (!message.Content.StartsWith('.') || message.Author.IsBot)
+            string command; // usefull var
+            string[] args; // args in command
+            int lengthOfCommand; // cmd length
+            message.Content.ToLower(); // making string easier to work with
+            _client.Log += Log; // logging
+            if (!message.Content.StartsWith('.') || message.Author.IsBot) // filtring msg
                 return Task.CompletedTask;
 
-            if (message.Content.Contains(' '))
+            if (message.Content.Contains(' ')) // checking if command has args
             {
-                lengthOfCommand = message.Content.IndexOf(' ');
-                command = message.Content.Substring(1, lengthOfCommand - 1).ToLower();
-                args = message.Content.Split(' ');
+                lengthOfCommand = message.Content.IndexOf(' '); // getting cmd length
+                command = message.Content.Substring(1, lengthOfCommand - 1).ToLower(); // getting cmd
+                args = message.Content.Split(' '); // getting agrs
 
-                if (command.Equals("my"))
+                if (command.Equals("my")) // first msg type
                 {
-                    switch (args[1])
+                    switch (args[1]) // checking first arg
                     {
                         case "tag":
                             _db.SingleMyData(message, args[1], "klandata", ":trophy:");
@@ -68,9 +68,9 @@ namespace DiscordBot
                             break;
                     }
                 }
-                else if (command.Equals("check"))
+                else if (command.Equals("check")) // second cmd type
                 {
-                    switch (args[1])
+                    switch (args[1]) // checking arg
                     {
                         case "clan":
                             await _clash.CocApiClan(args[2]);
@@ -85,24 +85,24 @@ namespace DiscordBot
                             break;
                     }
                 }
-                else if (command.Equals("admin"))
+                else if (command.Equals("admin")) // 3 cmd type
                 {
-                    //if (_clash.CheckAdminPerm(message).Equals(true))
+                    //if (_clash.CheckAdminPerm(message).Equals(true)) // checking if person has admin perm
                     //{
-                        if (args[1].Equals("get"))
+                        if (args[1].Equals("get")) // checking 1 arg
                         {
-                            if (args[2].Equals("single"))
+                            if (args[2].Equals("single")) // checking 2 arg
                             {
-                                switch (args[3])
+                                switch (args[3]) // checking arg, more in future
                                 {
                                     case "player":
                                         _db.SingleGetData(message, args[5], "klandata", "", args[4]);
                                         break;
                                 }
                             }
-                            else if (args[2].Equals("all"))
+                            else if (args[2].Equals("all")) // checking 2 arg
                             {
-                                switch (args[3])
+                                switch (args[3]) // checking 3 arg
                                 {
                                     case "player":
                                         _db.AllGetData(message, args[4]);
@@ -127,10 +127,10 @@ namespace DiscordBot
                                         var a = new FeedLevels(message).SetTimer();
                                         break;
                                         
-                            }
+                                }
                             }
                         }
-                        else if (args[1].Equals("check"))
+                        else if (args[1].Equals("check")) // checking 1 arg
                         {
                             switch (args[2])
                             {
@@ -146,11 +146,12 @@ namespace DiscordBot
                         {
                             await message.Channel.SendMessageAsync("Nie zrozumiałem komendy. Spróbuj ponownie");
                         }
+                        // msg 4 user with/ admin perm
                     /*}
                     else
                     {
                         var usr = message.Author as SocketGuildUser;
-                        await message.Channel.SendMessageAsync("", false, new EmbedBuilder()
+                        await message.Channel.SendMessageAsync("", false, new EmbedBuilder() 
                         {
                             Title = usr.Nickname,
                             ThumbnailUrl = usr.GetAvatarUrl(),
@@ -161,14 +162,14 @@ namespace DiscordBot
                     } */
                 }
             }
-            else
+            else // more cmd
             {
                 lengthOfCommand = message.Content.Length;
 
                 command = message.Content.Substring(1, lengthOfCommand - 1);
                 switch (command)
                 {
-                    case "Dupa":
+                    case "Lolas":
                         await message.Channel.SendMessageAsync($@"To ty {message.Author.Mention}");
                         break;
                     case "clantag":
